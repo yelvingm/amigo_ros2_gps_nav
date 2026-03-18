@@ -2,6 +2,8 @@
 
 AMIGO (Autonomous Machine for Inspecting Gas and Operations) is a ROS2 Humble-based robotic system developed by the Engineering Physics Propulsion Lab (EPPL) at Embry-Riddle Aeronautical University. Leveraging Unitree's Go2 quadruped robot, AMIGO provides autonomous navigation and inspection workflows for industrial environments.
 
+The frontier-nav branch uses a frontier-based navigation algorithm built by [robo-friends](https://github.com/robo-friends/m-explore-ros2) using a ZedXM for built in vSLAM, and SLAM toolbox to convert the pointcloud to laserscan.
+
 ## Requirements and Background
 
 This repository contains the software stack for running AMIGO on ROS2 Humble. The current primary camera is a ZED X Mini, but the launch files and URDF can be adapted for Intel RealSense cameras if desired.
@@ -22,6 +24,7 @@ This repository contains the software stack for running AMIGO on ROS2 Humble. Th
 - `src/go2_control`: logging, navigation scripts, GPS helpers
 - `src/zed-ros2-wrapper`: ZED ROS2 wrapper (requires ZED SDK)
 - `qtquick_test/qtquick_test-main`: QtQuick monitoring UI
+- `src/m-explore-ros2`: Frontier based navigation algorithm
 
 ## Setup
 
