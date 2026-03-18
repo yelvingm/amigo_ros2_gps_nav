@@ -79,50 +79,18 @@ To use RealSense cameras:
 2. Update `src/go2_description/urdf/go2.urdf.xacro` to replace the ZED macro with the RealSense URDF macro.
 3. Update the launch files in `src/go2_bringup/launch` to start the RealSense driver and remap any camera topics as needed.
 
-## Mapping and pose logging
-
-### Mapping
+## vSLAM, Nav2
 
 ```bash
-ros2 launch go2_bringup mapping.launch.py
-```
-
-### Pose logging
-
-- Log a normal navigation pose:
-
-```bash
-ros2 action send_goal /log_pose go2_interfaces/action/LogPose "{task_type: 'normal'}"
-```
-
-- Log a task pose:
-
-```bash
-ros2 action send_goal /log_pose go2_interfaces/action/LogPose "{task_type: 'task'}"
-```
-
-### Save the map
-
-```bash
-ros2 run nav2_map_server map_saver_cli -f src/go2_description/maps/<MAP_NAME> --free 0.25 --occ 0.65 --fmt png
+ros2 launch go2_bringup mapping.launch.py rviz:=true initial_pose:=false
 ```
 
 ## Localization and navigation
 
-1. Update the map in `src/go2_description/config/slam_toolbox_localization.yaml`:
-   - `map_file_name`
-   - `map_start_pose`
-2. Launch localization and navigation:
+Start the navigation script:
 
 ```bash
-ros2 launch go2_bringup go2_deploy.launch.py rviz:=true initial_pose:=false
-```
-
-3. Start the navigation script:
-
-```bash
-ros2 run go2_control task_nav_to_pose_test
-```
+ros2 run explore_lite explore
 
 ## GPS navigation (optional)
 
