@@ -2,7 +2,7 @@
 
 AMIGO (Autonomous Machine for Inspecting Gas and Operations) is a ROS2 Humble-based robotic system developed by the Engineering Physics Propulsion Lab (EPPL) at Embry-Riddle Aeronautical University. Leveraging Unitree's Go2 quadruped robot, AMIGO provides autonomous navigation and inspection workflows for industrial environments.
 
-The frontier-nav branch uses a frontier-based navigation algorithm built by [robo-friends](https://github.com/robo-friends/m-explore-ros2) using a ZedXM for built in vSLAM, and SLAM toolbox to convert the pointcloud to laserscan.
+The frontier-nav branch uses a frontier-based navigation algorithm built by [robo-friends](https://github.com/robo-friends/m-explore-ros2) using a ZedXM for built in vSLAM, a [Yahboom 10-Axis external IMU](https://github.com/YahboomTechnology/10-axis_IMU_Module), and SLAM toolbox to convert the pointcloud to laserscan.
 
 ## Requirements and Background
 
@@ -16,6 +16,7 @@ This repository contains the software stack for running AMIGO on ROS2 Humble. Th
 - RPLiDAR A3 (or compatible RPLiDAR)
 - GPS receiver (u-blox ZED-F9R tested)
 - Network access for package installs
+- Yahboom 10-Axis IMU
 
 ### Workspace layout
 
@@ -74,6 +75,10 @@ source install/setup.bash
 
 The default URDF and mapping launch files assume a ZED camera and include the ZED macro in `src/go2_description/urdf/go2.urdf.xacro`. Ensure the ZED SDK is installed and the `zed-ros2-wrapper` package builds successfully.
 
+```bash
+sudo systemctl restart zed_x_daemon
+```
+
 ### RealSense (alternative)
 
 To use RealSense cameras:
@@ -81,6 +86,21 @@ To use RealSense cameras:
 1. Install the Intel RealSense ROS2 wrapper (`realsense-ros`).
 2. Update `src/go2_description/urdf/go2.urdf.xacro` to replace the ZED macro with the RealSense URDF macro.
 3. Update the launch files in `src/go2_bringup/launch` to start the RealSense driver and remap any camera topics as needed.
+4. 
+
+### IMU 
+
+Bind IMU over USB
+
+```bash
+cd ~/WitImu_ws/src/wit_ros2_imu
+sudo chmod 777 bind_usb.sh
+sudo sh bind_usb.sh
+```
+Ensure the IMU is connected
+```bash
+ll /dev/imu_usb
+```
 
 ## Mapping and pose logging
 
